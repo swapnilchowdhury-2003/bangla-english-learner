@@ -494,6 +494,52 @@ const lessons = {
     color: "#2ec4b6",
     questions: [
       {
+  bn: "আমি এখন গান শুনছি।",
+  hint: "এখন চলছে = Present Continuous। I + am + listening।",
+  answer: "I am listening to music now.",
+  tense: "Present Continuous",
+  tenseBn: "ঘটমান বর্তমান কাল",
+  why: "এই মুহূর্তে চলছে এমন কাজের জন্য Present Continuous। I-এর সাথে 'am' ব্যবহার হয়।",
+  grammar: [
+    { label: "Subject", text: "<strong>I</strong>" },
+    { label: "Aux", text: "<strong>am</strong> — শুধু I-এর সাথে 'am'" },
+    { label: "Verb", text: "<strong>listening</strong> — listen + ing" },
+    { label: "Prep", text: "<strong>to</strong> — listen to music (listen music নয়!)" }
+  ],
+  syntax: '<span class="syn-subject">[I]</span> <span class="syn-aux">[am]</span> <span class="syn-verb">[listening]</span> <span class="syn-object">[to music]</span> <span class="syn-time">[now]</span>',
+  rule: "I + am + V+ing + Object"
+},
+{
+  bn: "তারা প্রতি রবিবার মাঠে খেলে।",
+  hint: "They + play (s লাগে না)। প্রতি রবিবার = every Sunday।",
+  answer: "They play in the field every Sunday.",
+  tense: "Simple Present",
+  tenseBn: "সাধারণ বর্তমান কাল",
+  why: "They/We/You-এর সাথে verb-এ s/es যোগ হয় না। নিয়মিত অভ্যাসের জন্য Simple Present।",
+  grammar: [
+    { label: "Subject", text: "<strong>They</strong> — তৃতীয় পুরুষ বহুবচন" },
+    { label: "Verb", text: "<strong>play</strong> — They-এর সাথে s যোগ হয় না" },
+    { label: "Time", text: "<strong>every Sunday</strong> — নিয়মিত অভ্যাস" }
+  ],
+  syntax: '<span class="syn-subject">[They]</span> <span class="syn-verb">[play]</span> <span class="syn-object">[in the field]</span> <span class="syn-time">[every Sunday]</span>',
+  rule: "They/We/You + V1 (no s) + Object"
+},
+{
+  bn: "সে কি এখন পড়ছে?",
+  hint: "প্রশ্ন + চলমান = Is + subject + verb-ing?",
+  answer: "Is she reading now?",
+  tense: "Present Continuous (Question)",
+  tenseBn: "ঘটমান বর্তমান — প্রশ্ন",
+  why: "চলমান কাজের প্রশ্নে am/is/are সামনে আসে। She-এর সাথে 'Is'।",
+  grammar: [
+    { label: "Aux", text: "<strong>Is</strong> — She/He/It-এর প্রশ্নে 'Is' সামনে আসে" },
+    { label: "Subject", text: "<strong>she</strong>" },
+    { label: "Verb", text: "<strong>reading</strong> — read + ing" }
+  ],
+  syntax: '<span class="syn-aux">[Is]</span> <span class="syn-subject">[she]</span> <span class="syn-verb">[reading]</span> <span class="syn-time">[now]</span>?',
+  rule: "Is/Are/Am + Subject + V+ing?"
+},
+      {
         bn: "আমি প্রতিদিন স্কুলে যাই।",
         hint: "Subject + verb (s/es) + object। 'যাওয়া' মানে go।",
         answer: "I go to school every day.",
@@ -577,6 +623,52 @@ const lessons = {
     color: "#e76f51",
     questions: [
       {
+  bn: "আমি গতকাল রাতে ঘুমাইনি।",
+  hint: "না ঘুমানো = negative। didn't + sleep (V1)।",
+  answer: "I did not sleep last night.",
+  tense: "Simple Past (Negative)",
+  tenseBn: "সাধারণ অতীত — না-বাচক",
+  why: "অতীতের না-বাচক বাক্যে 'did not' বা 'didn't' ব্যবহার হয়। এরপর V1 আসে, slept নয়!",
+  grammar: [
+    { label: "Subject", text: "<strong>I</strong>" },
+    { label: "Aux", text: "<strong>did not</strong> — অতীত negative-এ সব subject-এ একই" },
+    { label: "Verb", text: "<strong>sleep</strong> — did not-এর পরে V1 (slept নয়!)" },
+    { label: "Time", text: "<strong>last night</strong> — গতকাল রাতে" }
+  ],
+  syntax: '<span class="syn-subject">[I]</span> <span class="syn-aux">[did not]</span> <span class="syn-verb">[sleep]</span> <span class="syn-time">[last night]</span>',
+  rule: "Subject + did not + V1"
+},
+{
+  bn: "যখন বৃষ্টি হচ্ছিল, সে বাড়িতে ছিল।",
+  hint: "দুটো অতীত কাজ — একটা চলছিল (was raining), একটা ঘটল (was at home)।",
+  answer: "When it was raining, he was at home.",
+  tense: "Past Continuous",
+  tenseBn: "ঘটমান অতীত কাল",
+  why: "অতীতে একটা কাজ চলার সময় আরেকটা ঘটনা — 'when' দিয়ে দুটো জোড়া লাগানো হয়।",
+  grammar: [
+    { label: "Clause 1", text: "<strong>When it was raining</strong> — চলমান পটভূমি" },
+    { label: "Clause 2", text: "<strong>he was at home</strong> — একই সময়ের অবস্থা" },
+    { label: "Linking", text: "<strong>when</strong> — দুটো clause জোড়া দেয়" }
+  ],
+  syntax: '<span class="syn-time">[When]</span> <span class="syn-subject">[it]</span> <span class="syn-aux">[was]</span> <span class="syn-verb">[raining]</span>, <span class="syn-subject">[he]</span> <span class="syn-aux">[was]</span> <span class="syn-object">[at home]</span>',
+  rule: "When + Subject + was/were + V+ing, Subject + was/were + ..."
+},
+{
+  bn: "সে অফিসে পৌঁছানোর আগেই বৃষ্টি শুরু হয়ে গিয়েছিল।",
+  hint: "আগে শেষ হওয়া কাজ = Past Perfect। had + V3।",
+  answer: "It had started raining before he reached the office.",
+  tense: "Past Perfect",
+  tenseBn: "পুরাঘটিত অতীত কাল",
+  why: "দুটো অতীত কাজের মধ্যে যেটা আগে ঘটেছিল সেটার জন্য Past Perfect (had + V3) ব্যবহার হয়।",
+  grammar: [
+    { label: "Aux", text: "<strong>had</strong> — Past Perfect-এ সব subject-এ 'had'" },
+    { label: "Verb", text: "<strong>started</strong> — start-এর V3" },
+    { label: "Sequence", text: "বৃষ্টি আগে হয়েছিল → had started | পৌঁছানো পরে → reached" }
+  ],
+  syntax: '<span class="syn-subject">[It]</span> <span class="syn-aux">[had]</span> <span class="syn-verb">[started raining]</span> <span class="syn-time">[before he reached the office]</span>',
+  rule: "Subject + had + V3 ... before + Subject + V2"
+},
+      {
         bn: "আমি গতকাল বাজারে গিয়েছিলাম।",
         hint: "গতকাল = yesterday। গেছিলাম = went (go-এর past form)।",
         answer: "I went to the market yesterday.",
@@ -658,6 +750,37 @@ const lessons = {
     labelBn: "ভবিষ্যৎ কাল",
     color: "#74c0fc",
     questions: [
+      {
+  bn: "আমি আর কখনো দেরি করব না।",
+  hint: "আর করব না = will not (won't)। কখনো না = never।",
+  answer: "I will never be late again.",
+  tense: "Simple Future (Negative)",
+  tenseBn: "সাধারণ ভবিষ্যৎ — না-বাচক",
+  why: "ভবিষ্যতের না-বাচকে 'will not' বা 'won't' ব্যবহার হয়। সব subject-এ একই।",
+  grammar: [
+    { label: "Subject", text: "<strong>I</strong>" },
+    { label: "Aux", text: "<strong>will never</strong> — will + never = দৃঢ় প্রতিজ্ঞা" },
+    { label: "Verb", text: "<strong>be</strong> — will-এর পরে V1" },
+    { label: "Adv", text: "<strong>again</strong> — আর/পুনরায়" }
+  ],
+  syntax: '<span class="syn-subject">[I]</span> <span class="syn-aux">[will never]</span> <span class="syn-verb">[be]</span> <span class="syn-object">[late]</span> <span class="syn-time">[again]</span>',
+  rule: "Subject + will not/never + V1"
+},
+{
+  bn: "সম্ভবত আগামীকাল বৃষ্টি হবে।",
+  hint: "সম্ভবত = probably। will + probably।",
+  answer: "It will probably rain tomorrow.",
+  tense: "Simple Future",
+  tenseBn: "সাধারণ ভবিষ্যৎ কাল",
+  why: "আবহাওয়ার পূর্বাভাস বা সম্ভাবনা বোঝাতে will ব্যবহার হয়। 'probably' will-এর পরে বসে।",
+  grammar: [
+    { label: "Subject", text: "<strong>It</strong> — আবহাওয়ার ক্ষেত্রে 'It' subject হয়" },
+    { label: "Aux", text: "<strong>will probably</strong> — সম্ভাবনা বোঝায়" },
+    { label: "Verb", text: "<strong>rain</strong> — V1" }
+  ],
+  syntax: '<span class="syn-subject">[It]</span> <span class="syn-aux">[will probably]</span> <span class="syn-verb">[rain]</span> <span class="syn-time">[tomorrow]</span>',
+  rule: "It + will + probably + V1 (weather prediction)"
+},
       {
         bn: "আমি কাল ঢাকা যাব।",
         hint: "কাল = tomorrow। যাব = will go।",
