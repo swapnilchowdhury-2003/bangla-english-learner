@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>বাংলা → English Learner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=DM+Mono:wght@400;500&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e17;
+    --surface: #1a1826;
+    --surface2: #241f35;
+    --accent: #f4a261;
+    --accent2: #e76f51;
+    --green: #2ec4b6;
+    --red: #e63946;
+    --text: #fffffe;
+    --text2: #a7a0bb;
+    --border: rgba(255,255,255,0.08);
+    --radius: 16px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body {
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Sora', sans-serif;
+  }
+  .bangla { font-family: 'Hind Siliguri', sans-serif; }
+
+  /* Layout */
+  .app { max-width: 780px; margin: 0 auto; padding: 32px 20px 60px; }
+
+  /* Header */
+  .header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 40px;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .logo-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; font-family: 'Hind Siliguri', sans-serif; font-weight: 700;
+  }
+  .logo-text h1 { font-size: 18px; font-weight: 700; }
+  .logo-text p { font-size: 12px; color: var(--text2); margin-top: 1px; }
+  .streak-badge {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 8px 16px;
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* Progress bar */
+  .progress-bar-wrap {
+    background: var(--surface);
+    border-radius: 999px;
+    height: 6px;
+    margin-bottom: 32px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 999px;
+    transition: width 0.6s ease;
+  }
+  .progress-info {
+    display: flex; justify-content: space-between;
+    font-size: 12px; color: var(--text2);
+    margin-bottom: 8px;
+  }
+
+  /* Card */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute; top:0; left:0; right:0; height:3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+
+  /* Lesson tag */
+  .tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(244,162,97,0.15);
+    color: var(--accent);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 12px; font-weight: 600;
+    margin-bottom: 18px;
+  }
+
+  /* Bangla sentence */
+  .sentence-bn {
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 32px; font-weight: 700;
+    color: var(--text);
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+  .sentence-hint {
+    font-size: 13px;
+    color: var(--text2);
+    margin-bottom: 28px;
+  }
+
+  /* Timer */
+  .timer-row {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 20px;
+  }
+  .timer-circle {
+    width: 52px; height: 52px; flex-shrink: 0;
+    position: relative;
+  }
+  .timer-circle svg { transform: rotate(-90deg); }
+  .timer-circle .timer-num {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; font-weight: 700;
+    color: var(--accent);
+  }
+  .timer-label { font-size: 13px; color: var(--text2); }
+  .timer-label strong { display: block; color: var(--text); font-size: 14px; }
+
+  /* Input area */
+  .input-wrap { position: relative; margin-bottom: 16px; }
+  .input-wrap textarea {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    font-family: 'Sora', sans-serif;
+    font-size: 16px;
+    padding: 16px 18px;
+    resize: none;
+    min-height: 80px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .input-wrap textarea:focus {
+    border-color: var(--accent);
+  }
+  .input-wrap textarea::placeholder { color: var(--text2); }
+
+  /* Buttons */
+  .btn-row { display: flex; gap: 12px; }
+  .btn {
+    flex: 1;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    font-family: 'Sora', sans-serif;
+    font-size: 15px; font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+  }
+  .btn-primary:hover { opacity: 0.9; }
+  .btn-secondary {
+    background: var(--surface2);
+    color: var(--text2);
+    border: 1px solid var(--border);
+  }
+  .btn-secondary:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+  .btn-next {
+    background: var(--green);
+    color: #0f0e17;
+    flex: 1;
+  }
+
+  /* Result panel */
+  .result-panel {
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 20px;
+    display: none;
+  }
+  .result-correct {
+    background: rgba(46,196,182,0.12);
+    border: 1px solid rgba(46,196,182,0.3);
+  }
+  .result-wrong {
+    background: rgba(230,57,70,0.1);
+    border: 1px solid rgba(230,57,70,0.3);
+  }
+  .result-header {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 16px; font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .result-icon {
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+  .icon-correct { background: rgba(46,196,182,0.25); }
+  .icon-wrong { background: rgba(230,57,70,0.2); }
+
+  /* Correct answer */
+  .correct-answer {
+    background: rgba(255,255,255,0.04);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 16px;
+  }
+  .correct-answer .label { font-size: 11px; color: var(--text2); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.08em; }
+
+  /* Grammar explanation */
+  .grammar-box {
+    background: var(--surface2);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 14px;
+  }
+  .grammar-box h3 {
+    font-size: 13px;
+    color: var(--accent);
+    margin-bottom: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .grammar-row {
+    display: flex; gap: 10px;
+    margin-bottom: 10px;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .g-label {
+    background: rgba(244,162,97,0.15);
+    color: var(--accent);
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    height: fit-content;
+    margin-top: 2px;
+    font-family: 'Sora', sans-serif;
+  }
+  .g-text { color: var(--text2); }
+  .g-text strong { color: var(--text); font-weight: 600; }
+
+  /* Tense pill */
+  .tense-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(46,196,182,0.12);
+    border: 1px solid rgba(46,196,182,0.25);
+    color: var(--green);
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-size: 13px; font-weight: 600;
+    margin-bottom: 14px;
+  }
+  .tense-pill .bangla { font-size: 14px; }
+
+  /* Syntax highlight */
+  .syntax-line {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 8px;
+    padding: 12px 14px;
+    color: var(--text2);
+    line-height: 1.8;
+    border-left: 3px solid var(--accent);
+  }
+  .syn-subject { color: #74c0fc; }
+  .syn-verb { color: #f4a261; }
+  .syn-object { color: #a9e34b; }
+  .syn-aux { color: #da77f2; }
+  .syn-time { color: #ffd43b; }
+
+  /* Score */
+  .score-card {
+    background: var(--surface2);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .score-item { text-align: center; }
+  .score-num { font-size: 24px; font-weight: 700; }
+  .score-lbl { font-size: 11px; color: var(--text2); margin-top: 2px; }
+  .score-correct .score-num { color: var(--green); }
+  .score-wrong .score-num { color: var(--red); }
+  .score-total .score-num { color: var(--accent); }
+
+  /* Lesson nav */
+  .lesson-tabs {
+    display: flex; gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+  .lesson-tab {
+    padding: 7px 14px;
+    border-radius: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text2);
+    font-size: 13px; font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Sora', sans-serif;
+  }
+  .lesson-tab.active {
+    background: rgba(244,162,97,0.15);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .lesson-tab:hover:not(.active) { border-color: rgba(255,255,255,0.2); color: var(--text); }
+
+  /* Hint toggle */
+  .hint-toggle {
+    font-size: 13px;
+    color: var(--text2);
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-bottom: 16px;
+    user-select: none;
+  }
+  .hint-toggle:hover { color: var(--text); }
+  .hint-box {
+    background: rgba(244,162,97,0.07);
+    border: 1px solid rgba(244,162,97,0.15);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: none;
+    font-family: 'Hind Siliguri', sans-serif;
+    line-height: 1.7;
+  }
+
+  /* Congrats screen */
+  .congrats {
+    text-align: center;
+    padding: 48px 32px;
+    display: none;
+  }
+  .congrats-icon { font-size: 72px; margin-bottom: 16px; }
+  .congrats h2 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+  .congrats p { color: var(--text2); font-family: 'Hind Siliguri', sans-serif; font-size: 17px; margin-bottom: 28px; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 3px; }
+
+  @media (max-width: 480px) {
+    .sentence-bn { font-size: 24px; }
+    .card { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="logo">
+      <div class="logo-icon">বা</div>
+      <div class="logo-text">
+        <h1>BanglaLearn</h1>
+        <p class="bangla">প্রতিদিন ইংরেজি শিখুন</p>
+      </div>
+    </div>
+    <div class="streak-badge">🔥 <span id="streak-num">0</span> Streak</div>
+  </div>
+
+  <!-- Lesson Tabs -->
+  <div class="lesson-tabs" id="lesson-tabs"></div>
+
+  <!-- Progress -->
+  <div class="progress-info">
+    <span id="prog-label" class="bangla">লোড হচ্ছে...</span>
+    <span id="prog-frac" style="font-size:12px; color:var(--text2)"></span>
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+  </div>
+
+  <!-- Score -->
+  <div class="score-card" style="margin-bottom:24px;">
+    <div class="score-item score-correct"><div class="score-num" id="sc-correct">0</div><div class="score-lbl">সঠিক</div></div>
+    <div class="score-item score-wrong"><div class="score-num" id="sc-wrong">0</div><div class="score-lbl">ভুল</div></div>
+    <div class="score-item score-total"><div class="score-num" id="sc-total">0</div><div class="score-lbl">মোট</div></div>
+  </div>
+
+  <!-- Main Question Card -->
+  <div class="card" id="question-card">
+    <div id="tag-area"></div>
+    <div class="sentence-bn" id="bn-sentence"></div>
+    <div class="sentence-hint bangla" id="sentence-hint"></div>
+
+    <!-- Timer -->
+    <div class="timer-row">
+      <div class="timer-circle">
+        <svg width="52" height="52" viewBox="0 0 52 52">
+          <circle cx="26" cy="26" r="22" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3"/>
+          <circle cx="26" cy="26" r="22" fill="none" stroke="#f4a261" stroke-width="3"
+            stroke-dasharray="138" stroke-dashoffset="0" id="timer-arc" stroke-linecap="round"
+            style="transition: stroke-dashoffset 1s linear, stroke 0.5s;"/>
+        </svg>
+        <div class="timer-num" id="timer-num">30</div>
+      </div>
+      <div class="timer-label">
+        <strong>চিন্তার সময়</strong>
+        <span class="bangla">লিখতে শুরু করলেই টাইমার থামবে</span>
+      </div>
+    </div>
+
+    <!-- Hint -->
+    <div class="hint-toggle" onclick="toggleHint()">
+      <span id="hint-arrow">▶</span>
+      <span class="bangla">সাহায্য দেখুন</span>
+    </div>
+    <div class="hint-box bangla" id="hint-box"></div>
+
+    <!-- Input -->
+    <div class="input-wrap">
+      <textarea id="answer-input" placeholder="ইংরেজিতে লিখুন..."></textarea>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-secondary bangla" onclick="skipQuestion()">এড়িয়ে যান</button>
+      <button class="btn btn-primary bangla" onclick="checkAnswer()">উত্তর দিন ✓</button>
+    </div>
+  </div>
+
+  <!-- Result Panel -->
+  <div class="result-panel" id="result-panel">
+    <div class="result-header">
+      <div class="result-icon" id="result-icon"></div>
+      <span id="result-title" class="bangla"></span>
+    </div>
+
+    <div class="correct-answer">
+      <div class="label">সঠিক অনুবাদ</div>
+      <div id="correct-answer-text" style="font-size:17px; font-weight:600; margin-top:4px;"></div>
+    </div>
+
+    <div class="tense-pill bangla" id="tense-pill"></div>
+
+    <div class="grammar-box" id="grammar-box"></div>
+
+    <div class="syntax-line" id="syntax-line"></div>
+
+    <div class="btn-row" style="margin-top:16px;">
+      <button class="btn btn-next bangla" onclick="nextQuestion()">পরের প্রশ্ন →</button>
+    </div>
+  </div>
+
+  <!-- Congrats -->
+  <div class="congrats" id="congrats-screen">
+    <div class="congrats-icon">🎉</div>
+    <h2>অসাধারণ!</h2>
+    <p class="bangla">আপনি এই লেভেলের সব প্রশ্ন শেষ করেছেন!<br>আপনার স্কোর: <span id="final-score" style="color:var(--accent); font-weight:700;"></span></p>
+    <button class="btn btn-primary bangla" style="max-width:300px; margin:0 auto; display:block;" onclick="restartLesson()">আবার চেষ্টা করুন 🔄</button>
+  </div>
+
+</div>
+
+<script>
+// ===================== DATA =====================
+const lessons = {
+  present: {
+    label: "Present",
+    labelBn: "বর্তমান কাল",
+    color: "#2ec4b6",
+    questions: [
+      {
+        bn: "আমি প্রতিদিন স্কুলে যাই।",
+        hint: "Subject + verb (s/es) + object। 'যাওয়া' মানে go।",
+        answer: "I go to school every day.",
+        tense: "Simple Present",
+        tenseBn: "সাধারণ বর্তমান কাল",
+        why: "এটা একটা নিয়মিত অভ্যাস। নিয়মিত কাজের জন্য Simple Present ব্যবহার হয়।",
+        grammar: [
+          { label: "Subject", text: "<strong>I</strong> — প্রথম পুরুষ, একবচন" },
+          { label: "Verb", text: "<strong>go</strong> — I/You/We/They-এর সাথে মূল verb ব্যবহার হয়, s/es যোগ হয় না" },
+          { label: "Adverb", text: "<strong>every day</strong> — নিয়মিত অভ্যাস বোঝায়" }
+        ],
+        syntax: '<span class="syn-subject">[I]</span> <span class="syn-verb">[go]</span> <span class="syn-object">[to school]</span> <span class="syn-time">[every day]</span>',
+        rule: "Subject + V1 + Object + Time"
+      },
+      {
+        bn: "সে প্রতিদিন বই পড়ে।",
+        hint: "'সে' মানে He/She। 'পড়া' মানে read। He/She-এর সাথে verb-এ s/es লাগে।",
+        answer: "He reads books every day.",
+        tense: "Simple Present",
+        tenseBn: "সাধারণ বর্তমান কাল",
+        why: "তৃতীয় পুরুষ একবচন (He/She/It) — verb-এর শেষে s বা es যোগ হয়।",
+        grammar: [
+          { label: "Subject", text: "<strong>He</strong> — তৃতীয় পুরুষ একবচন" },
+          { label: "Verb", text: "<strong>reads</strong> — read + s কারণ subject = He/She/It" },
+          { label: "Object", text: "<strong>books</strong> — বহুবচন" }
+        ],
+        syntax: '<span class="syn-subject">[He]</span> <span class="syn-verb">[reads]</span> <span class="syn-object">[books]</span> <span class="syn-time">[every day]</span>',
+        rule: "He/She/It + V1+s/es + Object"
+      },
+      {
+        bn: "আমরা এখন খেলছি।",
+        hint: "'এখন' মানে এটা চলমান কাজ। Present Continuous ব্যবহার হবে: am/is/are + verb-ing।",
+        answer: "We are playing now.",
+        tense: "Present Continuous",
+        tenseBn: "ঘটমান বর্তমান কাল",
+        why: "এখন (এই মুহূর্তে) চলছে এমন কাজের জন্য Present Continuous। We + are ব্যবহার হয়।",
+        grammar: [
+          { label: "Subject", text: "<strong>We</strong> — প্রথম পুরুষ বহুবচন" },
+          { label: "Aux", text: "<strong>are</strong> — We/You/They-এর সাথে 'are'" },
+          { label: "Verb", text: "<strong>playing</strong> — play + ing" },
+          { label: "Adverb", text: "<strong>now</strong> — এই মুহূর্তে" }
+        ],
+        syntax: '<span class="syn-subject">[We]</span> <span class="syn-aux">[are]</span> <span class="syn-verb">[playing]</span> <span class="syn-time">[now]</span>',
+        rule: "Subject + am/is/are + V+ing"
+      },
+      {
+        bn: "তুমি কি ভাত খাও?",
+        hint: "প্রশ্ন বাক্য। Do/Does দিয়ে শুরু হবে। তুমি = You।",
+        answer: "Do you eat rice?",
+        tense: "Simple Present (Question)",
+        tenseBn: "বর্তমান কালের প্রশ্ন",
+        why: "প্রশ্ন বাক্যে Do/Does সামনে আসে। You-এর সাথে 'Do' ব্যবহার হয়।",
+        grammar: [
+          { label: "Aux", text: "<strong>Do</strong> — I/You/We/They-এর প্রশ্নে 'Do'" },
+          { label: "Subject", text: "<strong>you</strong> — প্রশ্নের পরে subject আসে" },
+          { label: "Verb", text: "<strong>eat</strong> — মূল verb, s/es লাগে না" }
+        ],
+        syntax: '<span class="syn-aux">[Do]</span> <span class="syn-subject">[you]</span> <span class="syn-verb">[eat]</span> <span class="syn-object">[rice]</span>?',
+        rule: "Do/Does + Subject + V1 + Object?"
+      },
+      {
+        bn: "সে এখন ঘুমাচ্ছে।",
+        hint: "সে = He/She, এখন চলছে, তাই is + sleeping।",
+        answer: "He is sleeping now.",
+        tense: "Present Continuous",
+        tenseBn: "ঘটমান বর্তমান কাল",
+        why: "He-এর সাথে 'is' ব্যবহার হয়। চলমান কাজে verb-এর সাথে ing যোগ হয়।",
+        grammar: [
+          { label: "Subject", text: "<strong>He</strong> — তৃতীয় পুরুষ একবচন" },
+          { label: "Aux", text: "<strong>is</strong> — He/She/It-এর সাথে 'is'" },
+          { label: "Verb", text: "<strong>sleeping</strong> — sleep + ing" }
+        ],
+        syntax: '<span class="syn-subject">[He]</span> <span class="syn-aux">[is]</span> <span class="syn-verb">[sleeping]</span> <span class="syn-time">[now]</span>',
+        rule: "He/She/It + is + V+ing"
+      }
+    ]
+  },
+  past: {
+    label: "Past",
+    labelBn: "অতীত কাল",
+    color: "#e76f51",
+    questions: [
+      {
+        bn: "আমি গতকাল বাজারে গিয়েছিলাম।",
+        hint: "গতকাল = yesterday। গেছিলাম = went (go-এর past form)।",
+        answer: "I went to the market yesterday.",
+        tense: "Simple Past",
+        tenseBn: "সাধারণ অতীত কাল",
+        why: "গতকাল কাজটা শেষ হয়ে গেছে। এই ধরনের সম্পন্ন অতীত কাজের জন্য Simple Past ব্যবহার হয়।",
+        grammar: [
+          { label: "Subject", text: "<strong>I</strong> — প্রথম পুরুষ" },
+          { label: "Verb", text: "<strong>went</strong> — go-এর Past form (Irregular verb)" },
+          { label: "Time", text: "<strong>yesterday</strong> — গতকাল, অতীত বোঝায়" }
+        ],
+        syntax: '<span class="syn-subject">[I]</span> <span class="syn-verb">[went]</span> <span class="syn-object">[to the market]</span> <span class="syn-time">[yesterday]</span>',
+        rule: "Subject + V2 (Past form) + Object + Time"
+      },
+      {
+        bn: "সে সকালে দুধ খেয়েছিল।",
+        hint: "খেয়েছিল = ate (eat-এর past form)। সকালে = in the morning।",
+        answer: "He ate milk in the morning.",
+        tense: "Simple Past",
+        tenseBn: "সাধারণ অতীত কাল",
+        why: "অতীতে ঘটা কাজ। Irregular verb 'eat' এর past form হলো 'ate'।",
+        grammar: [
+          { label: "Subject", text: "<strong>He</strong> — তৃতীয় পুরুষ" },
+          { label: "Verb", text: "<strong>ate</strong> — eat-এর V2 form" },
+          { label: "Time", text: "<strong>in the morning</strong> — সকালে" }
+        ],
+        syntax: '<span class="syn-subject">[He]</span> <span class="syn-verb">[ate]</span> <span class="syn-object">[milk]</span> <span class="syn-time">[in the morning]</span>',
+        rule: "Subject + V2 + Object + Time"
+      },
+      {
+        bn: "আমরা গতকাল ক্রিকেট খেলছিলাম।",
+        hint: "চলমান অতীত কাজ। was/were + verb-ing। We + were।",
+        answer: "We were playing cricket yesterday.",
+        tense: "Past Continuous",
+        tenseBn: "ঘটমান অতীত কাল",
+        why: "অতীতে কোনো একটা সময়ে চলছিল এমন কাজের জন্য Past Continuous। We-এর সাথে 'were' ব্যবহার হয়।",
+        grammar: [
+          { label: "Subject", text: "<strong>We</strong> — বহুবচন" },
+          { label: "Aux", text: "<strong>were</strong> — We/You/They-এর সাথে Past Continuous-এ 'were'" },
+          { label: "Verb", text: "<strong>playing</strong> — play + ing" }
+        ],
+        syntax: '<span class="syn-subject">[We]</span> <span class="syn-aux">[were]</span> <span class="syn-verb">[playing]</span> <span class="syn-object">[cricket]</span> <span class="syn-time">[yesterday]</span>',
+        rule: "Subject + was/were + V+ing"
+      },
+      {
+        bn: "তুমি কি গতকাল স্কুলে গিয়েছিলে?",
+        hint: "অতীতের প্রশ্ন = Did + subject + V1।",
+        answer: "Did you go to school yesterday?",
+        tense: "Simple Past (Question)",
+        tenseBn: "অতীত কালের প্রশ্ন",
+        why: "অতীতের প্রশ্নে সবার ক্ষেত্রে 'Did' ব্যবহার হয়। এরপর verb এর base form (V1) আসে।",
+        grammar: [
+          { label: "Aux", text: "<strong>Did</strong> — সব subject-এর অতীত প্রশ্নে 'Did'" },
+          { label: "Subject", text: "<strong>you</strong>" },
+          { label: "Verb", text: "<strong>go</strong> — Did-এর পরে V1 (base form)" }
+        ],
+        syntax: '<span class="syn-aux">[Did]</span> <span class="syn-subject">[you]</span> <span class="syn-verb">[go]</span> <span class="syn-object">[to school]</span> <span class="syn-time">[yesterday]</span>?',
+        rule: "Did + Subject + V1 + Object?"
+      },
+      {
+        bn: "সে আগে এখানে থাকত।",
+        hint: "'আগে থাকত' মানে অতীতের অভ্যাস। Used to ব্যবহার করুন।",
+        answer: "He used to live here.",
+        tense: "Used to (Past Habit)",
+        tenseBn: "অতীতের অভ্যাস",
+        why: "অতীতে নিয়মিত যা হতো কিন্তু এখন হয় না — সেটার জন্য 'used to + V1' ব্যবহার হয়।",
+        grammar: [
+          { label: "Subject", text: "<strong>He</strong>" },
+          { label: "Aux", text: "<strong>used to</strong> — অতীতের অভ্যাস বা অবস্থা বোঝায়" },
+          { label: "Verb", text: "<strong>live</strong> — used to-এর পরে V1" }
+        ],
+        syntax: '<span class="syn-subject">[He]</span> <span class="syn-aux">[used to]</span> <span class="syn-verb">[live]</span> <span class="syn-object">[here]</span>',
+        rule: "Subject + used to + V1"
+      }
+    ]
+  },
+  future: {
+    label: "Future",
+    labelBn: "ভবিষ্যৎ কাল",
+    color: "#74c0fc",
+    questions: [
+      {
+        bn: "আমি কাল ঢাকা যাব।",
+        hint: "কাল = tomorrow। যাব = will go।",
+        answer: "I will go to Dhaka tomorrow.",
+        tense: "Simple Future",
+        tenseBn: "সাধারণ ভবিষ্যৎ কাল",
+        why: "ভবিষ্যতে কোনো কাজ করার ইচ্ছা বা পরিকল্পনার জন্য will + V1 ব্যবহার হয়।",
+        grammar: [
+          { label: "Subject", text: "<strong>I</strong>" },
+          { label: "Aux", text: "<strong>will</strong> — সব subject-এর সাথে ভবিষ্যতে একই 'will'" },
+          { label: "Verb", text: "<strong>go</strong> — will-এর পরে সবসময় V1 (base form)" },
+          { label: "Time", text: "<strong>tomorrow</strong> — কাল" }
+        ],
+        syntax: '<span class="syn-subject">[I]</span> <span class="syn-aux">[will]</span> <span class="syn-verb">[go]</span> <span class="syn-object">[to Dhaka]</span> <span class="syn-time">[tomorrow]</span>',
+        rule: "Subject + will + V1 + Object + Time"
+      },
+      {
+        bn: "সে আগামীকাল পরীক্ষা দেবে।",
+        hint: "দেবে = will give। আগামীকাল = tomorrow।",
+        answer: "He will give the exam tomorrow.",
+        tense: "Simple Future",
+        tenseBn: "সাধারণ ভবিষ্যৎ কাল",
+        why: "will সব subject-এর ক্ষেত্রে একই। He/She/It-এর জন্যও 'will' পরিবর্তন হয় না।",
+        grammar: [
+          { label: "Subject", text: "<strong>He</strong>" },
+          { label: "Aux", text: "<strong>will</strong> — He-এর সাথেও 'will' (wills নয়!)" },
+          { label: "Verb", text: "<strong>give</strong> — V1" }
+        ],
+        syntax: '<span class="syn-subject">[He]</span> <span class="syn-aux">[will]</span> <span class="syn-verb">[give]</span> <span class="syn-object">[the exam]</span> <span class="syn-time">[tomorrow]</span>',
+        rule: "Subject + will + V1"
+      },
+      {
+        bn: "আমরা এই সপ্তাহে সিনেমা দেখতে যাচ্ছি।",
+        hint: "পরিকল্পনা করা হয়েছে = be going to। We + are going to।",
+        answer: "We are going to watch a movie this week.",
+        tense: "Be going to (Future Plan)",
+        tenseBn: "পরিকল্পিত ভবিষ্যৎ",
+        why: "আগে থেকে ঠিক করা পরিকল্পনার জন্য 'be going to' ব্যবহার হয়। will দিয়েও বলা যায়।",
+        grammar: [
+          { label: "Subject", text: "<strong>We</strong>" },
+          { label: "Aux", text: "<strong>are going to</strong> — We-এর সাথে 'are going to'" },
+          { label: "Verb", text: "<strong>watch</strong> — going to-এর পরে V1" }
+        ],
+        syntax: '<span class="syn-subject">[We]</span> <span class="syn-aux">[are going to]</span> <span class="syn-verb">[watch]</span> <span class="syn-object">[a movie]</span> <span class="syn-time">[this week]</span>',
+        rule: "Subject + am/is/are going to + V1"
+      },
+      {
+        bn: "তুমি কি পরীক্ষায় পাস করবে?",
+        hint: "ভবিষ্যতের প্রশ্ন = Will + subject + V1?",
+        answer: "Will you pass the exam?",
+        tense: "Simple Future (Question)",
+        tenseBn: "ভবিষ্যৎ কালের প্রশ্ন",
+        why: "ভবিষ্যতের প্রশ্নে 'Will' সামনে আসে। তারপর Subject, তারপর V1।",
+        grammar: [
+          { label: "Aux", text: "<strong>Will</strong> — প্রশ্নে সামনে আসে" },
+          { label: "Subject", text: "<strong>you</strong>" },
+          { label: "Verb", text: "<strong>pass</strong> — V1 base form" }
+        ],
+        syntax: '<span class="syn-aux">[Will]</span> <span class="syn-subject">[you]</span> <span class="syn-verb">[pass]</span> <span class="syn-object">[the exam]</span>?',
+        rule: "Will + Subject + V1 + Object?"
+      },
+      {
+        bn: "আমি কাল সন্ধ্যায় পড়াশোনা করতে থাকব।",
+        hint: "ভবিষ্যতের একটা সময়ে চলমান কাজ = will be + verb-ing।",
+        answer: "I will be studying tomorrow evening.",
+        tense: "Future Continuous",
+        tenseBn: "ঘটমান ভবিষ্যৎ কাল",
+        why: "ভবিষ্যতের নির্দিষ্ট সময়ে যা চলতে থাকবে তার জন্য Future Continuous (will be + V+ing)।",
+        grammar: [
+          { label: "Subject", text: "<strong>I</strong>" },
+          { label: "Aux", text: "<strong>will be</strong> — Future Continuous-এ সব subject-এ 'will be'" },
+          { label: "Verb", text: "<strong>studying</strong> — study + ing" }
+        ],
+        syntax: '<span class="syn-subject">[I]</span> <span class="syn-aux">[will be]</span> <span class="syn-verb">[studying]</span> <span class="syn-time">[tomorrow evening]</span>',
+        rule: "Subject + will be + V+ing + Time"
+      }
+    ]
+  },
+  have: {
+    label: "Have/Has/Had",
+    labelBn: "Have / Has / Had",
+    color: "#a9e34b",
+    questions: [
+      {
+        bn: "আমার একটি বই আছে।",
+        hint: "আছে = have (I-এর সাথে)। I + have।",
+        answer: "I have a book.",
+        tense: "Simple Present (have)",
+        tenseBn: "বর্তমান — have",
+        why: "I/You/We/They-এর সাথে 'have' ব্যবহার হয়। কিছু থাকা বোঝাতে have/has ব্যবহার হয়।",
+        grammar: [
+          { label: "Subject", text: "<strong>I</strong>" },
+          { label: "Verb", text: "<strong>have</strong> — I/You/We/They-এর সাথে 'have'" },
+          { label: "Object", text: "<strong>a book</strong> — একটি বই" }
+        ],
+        syntax: '<span class="syn-subject">[I]</span> <span class="syn-verb">[have]</span> <span class="syn-object">[a book]</span>',
+        rule: "I/You/We/They + have + Object"
+      },
+      {
+        bn: "তার একটি গাড়ি আছে।",
+        hint: "তার = He/She-এর সাথে 'has'। He + has।",
+        answer: "He has a car.",
+        tense: "Simple Present (has)",
+        tenseBn: "বর্তমান — has",
+        why: "He/She/It-এর সাথে 'has' ব্যবহার হয়। 'have' নয়!",
+        grammar: [
+          { label: "Subject", text: "<strong>He</strong> — তৃতীয় পুরুষ একবচন" },
+          { label: "Verb", text: "<strong>has</strong> — He/She/It-এর সাথে 'has' (have নয়!)" },
+          { label: "Object", text: "<strong>a car</strong>" }
+        ],
+        syntax: '<span class="syn-subject">[He]</span> <span class="syn-verb">[has]</span> <span class="syn-object">[a car]</span>',
+        rule: "He/She/It + has + Object"
+      },
+      {
+        bn: "আমি ভাত খেয়েছি।",
+        hint: "সবেমাত্র খেয়েছি = Present Perfect। I + have + eaten।",
+        answer: "I have eaten rice.",
+        tense: "Present Perfect",
+        tenseBn: "পুরাঘটিত বর্তমান",
+        why: "কাজ এইমাত্র শেষ হয়েছে বা ফলাফল এখনো আছে — Present Perfect: have/has + V3।",
+        grammar: [
+          { label: "Subject", text: "<strong>I</strong>" },
+          { label: "Aux", text: "<strong>have</strong> — Present Perfect-এ I-এর সাথে 'have'" },
+          { label: "Verb", text: "<strong>eaten</strong> — eat-এর V3 (past participle) form" }
+        ],
+        syntax: '<span class="syn-subject">[I]</span> <span class="syn-aux">[have]</span> <span class="syn-verb">[eaten]</span> <span class="syn-object">[rice]</span>',
+        rule: "Subject + have/has + V3 (Past Participle)"
+      },
+      {
+        bn: "তার কাছে আগে অনেক টাকা ছিল।",
+        hint: "আগে ছিল = had (অতীতে থাকা)।",
+        answer: "He had a lot of money before.",
+        tense: "Simple Past (had)",
+        tenseBn: "অতীত — had",
+        why: "অতীতে কিছু থাকা বোঝাতে সব subject-এর সাথে 'had' ব্যবহার হয়। Have এবং has-এর Past form হলো had।",
+        grammar: [
+          { label: "Subject", text: "<strong>He</strong>" },
+          { label: "Verb", text: "<strong>had</strong> — have/has-এর Past form (সব subject-এ একই)" },
+          { label: "Object", text: "<strong>a lot of money</strong>" }
+        ],
+        syntax: '<span class="syn-subject">[He]</span> <span class="syn-verb">[had]</span> <span class="syn-object">[a lot of money]</span> <span class="syn-time">[before]</span>',
+        rule: "Subject + had + Object (অতীতে ছিল বোঝাতে)"
+      },
+      {
+        bn: "সে কি কখনো ঢাকা গেছে?",
+        hint: "কখনো গেছে কিনা = Present Perfect Question। Has + subject + V3?",
+        answer: "Has he ever been to Dhaka?",
+        tense: "Present Perfect (Question)",
+        tenseBn: "পুরাঘটিত বর্তমান — প্রশ্ন",
+        why: "জীবনে কখনো অভিজ্ঞতা হয়েছে কিনা জিজ্ঞেস করতে Present Perfect। He-এর সাথে 'Has'।",
+        grammar: [
+          { label: "Aux", text: "<strong>Has</strong> — He-এর Present Perfect প্রশ্নে 'Has'" },
+          { label: "Subject", text: "<strong>he</strong>" },
+          { label: "Adv", text: "<strong>ever</strong> — 'কখনো' বোঝাতে" },
+          { label: "Verb", text: "<strong>been</strong> — be-এর V3" }
+        ],
+        syntax: '<span class="syn-aux">[Has]</span> <span class="syn-subject">[he]</span> <span class="syn-verb">[ever been]</span> <span class="syn-object">[to Dhaka]</span>?',
+        rule: "Have/Has + Subject + ever + V3?"
+      }
+    ]
+  }
+};
+
+// ===================== STATE =====================
+let currentLesson = 'present';
+let currentIdx = 0;
+let timerInterval = null;
+let timeLeft = 30;
+let thinkingDone = false;
+let score = { correct: 0, wrong: 0, total: 0 };
+let streak = parseInt(localStorage.getItem('bnStreak') || '0');
+let answered = false;
+
+// ===================== INIT =====================
+function init() {
+  document.getElementById('streak-num').textContent = streak;
+  buildTabs();
+  loadQuestion();
+}
+
+function buildTabs() {
+  const tabsEl = document.getElementById('lesson-tabs');
+  tabsEl.innerHTML = '';
+  Object.keys(lessons).forEach(key => {
+    const btn = document.createElement('button');
+    btn.className = 'lesson-tab' + (key === currentLesson ? ' active' : '');
+    btn.innerHTML = `${lessons[key].label} <span class="bangla" style="font-size:11px; opacity:0.7;">(${lessons[key].labelBn})</span>`;
+    btn.onclick = () => switchLesson(key);
+    tabsEl.appendChild(btn);
+  });
+}
+
+function switchLesson(key) {
+  currentLesson = key;
+  currentIdx = 0;
+  score = { correct: 0, wrong: 0, total: 0 };
+  updateScore();
+  buildTabs();
+  document.getElementById('congrats-screen').style.display = 'none';
+  document.getElementById('question-card').style.display = 'block';
+  document.getElementById('result-panel').style.display = 'none';
+  loadQuestion();
+}
+
+function loadQuestion() {
+  const lesson = lessons[currentLesson];
+  const q = lesson.questions[currentIdx];
+  answered = false;
+
+  // Tag
+  document.getElementById('tag-area').innerHTML = `<div class="tag">📚 ${lesson.label} — ${lesson.labelBn}</div>`;
+
+  // Sentence
+  document.getElementById('bn-sentence').textContent = q.bn;
+  document.getElementById('sentence-hint').innerHTML = `<span class="bangla">🌿 ইংরেজিতে অনুবাদ করুন</span>`;
+
+  // Progress
+  const total = lesson.questions.length;
+  const pct = Math.round((currentIdx / total) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('prog-label').textContent = `প্রশ্ন ${currentIdx + 1} / ${total}`;
+  document.getElementById('prog-frac').textContent = lesson.labelBn;
+
+  // Hint
+  document.getElementById('hint-box').textContent = q.hint;
+  document.getElementById('hint-box').style.display = 'none';
+  document.getElementById('hint-arrow').textContent = '▶';
+
+  // Clear answer
+  document.getElementById('answer-input').value = '';
+  document.getElementById('answer-input').disabled = false;
+  document.getElementById('result-panel').style.display = 'none';
+
+  // Timer
+  startTimer();
+}
+
+function startTimer() {
+  clearInterval(timerInterval);
+  timeLeft = 30;
+  thinkingDone = false;
+  updateTimerUI(30, 30);
+
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    updateTimerUI(timeLeft, 30);
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      thinkingDone = true;
+      document.getElementById('timer-num').textContent = '✓';
+    }
+  }, 1000);
+}
+
+function updateTimerUI(t, max) {
+  const el = document.getElementById('timer-num');
+  const arc = document.getElementById('timer-arc');
+  const circumference = 138;
+  const offset = circumference * (1 - t / max);
+  arc.style.strokeDashoffset = offset;
+
+  if (t > 15) arc.style.stroke = '#f4a261';
+  else if (t > 7) arc.style.stroke = '#ffd43b';
+  else arc.style.stroke = '#e63946';
+
+  el.textContent = t > 0 ? t : '✓';
+}
+
+function toggleHint() {
+  const box = document.getElementById('hint-box');
+  const arrow = document.getElementById('hint-arrow');
+  if (box.style.display === 'none' || !box.style.display) {
+    box.style.display = 'block';
+    arrow.textContent = '▼';
+  } else {
+    box.style.display = 'none';
+    arrow.textContent = '▶';
+  }
+}
+
+function checkAnswer() {
+  if (answered) return;
+  const lesson = lessons[currentLesson];
+  const q = lesson.questions[currentIdx];
+  const userAns = document.getElementById('answer-input').value.trim();
+  if (!userAns) return;
+
+  clearInterval(timerInterval);
+  answered = true;
+  score.total++;
+
+  // Normalize comparison
+  const normalize = s => s.toLowerCase().replace(/[?.!,]/g, '').replace(/\s+/g, ' ').trim();
+  const isCorrect = normalize(userAns) === normalize(q.answer);
+
+  if (isCorrect) {
+    score.correct++;
+    streak++;
+    localStorage.setItem('bnStreak', streak);
+    document.getElementById('streak-num').textContent = streak;
+    showResult(true, q);
+  } else {
+    score.wrong++;
+    streak = 0;
+    localStorage.setItem('bnStreak', 0);
+    document.getElementById('streak-num').textContent = 0;
+    showResult(false, q);
+  }
+  updateScore();
+}
+
+function showResult(correct, q) {
+  const panel = document.getElementById('result-panel');
+  panel.className = 'result-panel ' + (correct ? 'result-correct' : 'result-wrong');
+
+  document.getElementById('result-icon').innerHTML = correct ? '✓' : '✗';
+  document.getElementById('result-icon').className = 'result-icon ' + (correct ? 'icon-correct' : 'icon-wrong');
+  document.getElementById('result-icon').style.color = correct ? 'var(--green)' : 'var(--red)';
+
+  document.getElementById('result-title').textContent = correct
+    ? '🎉 চমৎকার! সঠিক উত্তর!'
+    : '😔 ভুল হয়েছে। মনোযোগ দিয়ে দেখুন:';
+
+  document.getElementById('correct-answer-text').textContent = q.answer;
+
+  document.getElementById('tense-pill').innerHTML =
+    `⏱ Tense: <span style="font-weight:700;">${q.tense}</span> <span class="bangla">— ${q.tenseBn}</span>`;
+
+  // Grammar box
+  let gHtml = `<h3>📖 ব্যাকরণ ব্যাখ্যা</h3>`;
+  gHtml += `<div class="grammar-row"><div class="g-label">WHY</div><div class="g-text bangla">${q.why}</div></div>`;
+  q.grammar.forEach(g => {
+    gHtml += `<div class="grammar-row"><div class="g-label">${g.label}</div><div class="g-text bangla">${g.text}</div></div>`;
+  });
+  document.getElementById('grammar-box').innerHTML = gHtml;
+
+  // Syntax
+  document.getElementById('syntax-line').innerHTML =
+    `<span style="color:var(--text2); font-size:11px; display:block; margin-bottom:6px;">SYNTAX: ${q.rule}</span>${q.syntax}`;
+
+  panel.style.display = 'block';
+  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function updateScore() {
+  document.getElementById('sc-correct').textContent = score.correct;
+  document.getElementById('sc-wrong').textContent = score.wrong;
+  document.getElementById('sc-total').textContent = score.total;
+}
+
+function nextQuestion() {
+  const lesson = lessons[currentLesson];
+  if (currentIdx < lesson.questions.length - 1) {
+    currentIdx++;
+    document.getElementById('result-panel').style.display = 'none';
+    document.getElementById('answer-input').disabled = false;
+    loadQuestion();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else {
+    // Done
+    document.getElementById('question-card').style.display = 'none';
+    document.getElementById('result-panel').style.display = 'none';
+    const pct = Math.round((score.correct / lesson.questions.length) * 100);
+    document.getElementById('final-score').textContent = `${score.correct}/${lesson.questions.length} (${pct}%)`;
+    document.getElementById('congrats-screen').style.display = 'block';
+    document.getElementById('progress-fill').style.width = '100%';
+  }
+}
+
+function skipQuestion() {
+  clearInterval(timerInterval);
+  const lesson = lessons[currentLesson];
+  const q = lesson.questions[currentIdx];
+  answered = true;
+  score.total++;
+  score.wrong++;
+  updateScore();
+  document.getElementById('answer-input').value = '(এড়িয়ে গেছেন)';
+  showResult(false, q);
+}
+
+function restartLesson() {
+  currentIdx = 0;
+  score = { correct: 0, wrong: 0, total: 0 };
+  updateScore();
+  document.getElementById('congrats-screen').style.display = 'none';
+  document.getElementById('question-card').style.display = 'block';
+  loadQuestion();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Stop timer when user starts typing
+document.getElementById('answer-input').addEventListener('input', function() {
+  if (!thinkingDone && timeLeft > 0) {
+    clearInterval(timerInterval);
+    thinkingDone = true;
+    document.getElementById('timer-num').textContent = '✓';
+    document.getElementById('timer-arc').style.strokeDashoffset = 138;
+    document.getElementById('timer-arc').style.stroke = 'var(--green)';
+  }
+});
+
+// Enter key to submit
+document.getElementById('answer-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && e.ctrlKey) checkAnswer();
+});
+
+init();
+</script>
+</body>
+</html>
